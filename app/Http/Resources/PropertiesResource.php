@@ -19,6 +19,7 @@ class PropertiesResource extends JsonResource
 
         return [
             'id' => (string)$this->id,
+            'type' => 'Properties',
             'attributes' => [
                 'addresss' => $this->address,
                 'listing_type' => $this->listing_type,
@@ -27,14 +28,16 @@ class PropertiesResource extends JsonResource
                 'description' => $this->description,
                 'build_year' => $this->build_year,
             ],
-            'characteristics' => [
-                new CharacteristicsResource($this->characteristic)
+            'relationships' => [
+                'characteristics' => [
+                    new CharacteristicsResource($this->characteristic)
+                ],
+                'broker' => [
+                    'name' => $broker->name,
+                    'address' => $broker->address,
+                    'phone_number' => $broker->phone_number,
+                ]
             ],
-            'broker' => [
-                'name' => $broker->name,
-                'address' => $broker->address,
-                'phone_number' => $broker->phone_number,
-            ]
         ];
     }
 }
